@@ -1,0 +1,4 @@
+colorama==0.4.6
+PyPDF2==3.0.1
+typing_extensions==4.9.0
+XlsxWriter==3.1.9

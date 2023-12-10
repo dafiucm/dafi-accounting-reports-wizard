@@ -21,7 +21,7 @@ logger.addHandler(ch)
 g_tmp_path = ".tmp/"
 
 # E.g.: "Orden: E0390122A400 DELEGACION ALUMNOS"
-g_request_regex = r"Orden: (?P<request_id>\w+) (?P<request_name>.+)"
+g_report_object_regex = r"Orden: (?P<object_id>\w+) (?P<object_name>.+)"
 
 # E.g.: "2    de    6"
 g_number_of_pages_regex = r"\d\s+de\s+(?P<number_of_pages>\d+)"
@@ -48,12 +48,12 @@ g_months = {
 g_amount_regex = r"\d{1,3}(?:\.\d{3})*,\d{2}"
 
 # E.g.: "Importe total de la orden E0390122A400:            11.384.852,92"
-g_total_report_amount_regex = r"Importe total de la orden (?P<request_id>\w+):\s+(?P<total_report_amount>" + g_amount_regex + ")"
+g_total_report_amount_regex = r"Importe total de la orden (?P<request_id>\w+):\s+(?P<total_amount>" + g_amount_regex + ")"
 
 g_ignored_strings = [
     "UNIVERSIDAD COMPLUTENSE DE MADRID",
     "INFORME DE GASTOS ACUMULADO",
-    g_request_regex,
+    g_report_object_regex,
     g_number_of_pages_regex,
     g_date_regex,
     g_total_report_amount_regex,
@@ -106,19 +106,19 @@ g_reference_regex = "|".join([g_reference_common_regex, g_reference_sn_date_rege
 g_transaction_second_line_regex = r"^((?P<reference>" + g_reference_regex + ")\s)?(?P<vendor_id>\w+)\s(?P<vendor_name>.+)$"
 
 g_budget_positions = {
-    "G/2050000/2000": BudgetPosition("G/2050000/2000", "Mobiliario y Enseres", 2),
-    "G/2200000/2000": BudgetPosition("G/2200000/2000", "Fungible de Oficina", 2),
-    "G/2200300/2000": BudgetPosition("G/2200300/2000", "Fungibles de Informática", 2),
-    "G/2210700/2000": BudgetPosition("G/2210700/2000", "Fungibles de Laboratorio", 2),
-    "G/2219900/2000": BudgetPosition("G/2219900/2000", "Otros Suministros", 2),
-    "G/2230100/2000": BudgetPosition("G/2230100/2000", "Otros Transportes", 2),
-    "G/2260200/2000": BudgetPosition("G/2260200/2000", "Publicidad y Propaganda", 2),
-    "G/2260500/2000": BudgetPosition("G/2260500/2000", "Cuotas de Inscripciones", 2),
-    "G/2261100/2000": BudgetPosition("G/2261100/2000", "Ayudas de Viajes", 2),
-    "G/2270800/2000": BudgetPosition("G/2270800/2000", "Trabajos de Imprenta", 2),
-    "G/2279900/2000": BudgetPosition("G/2279900/2000", "Otros Trabajos", 2),
-    "G/6200127/2000": BudgetPosition("G/6200127/2000", "Utillaje", 6),
-    "G/6200129/2000": BudgetPosition("G/6200129/2000", "Equipos Informáticos", 6),
+    "G/2050000/2000": BudgetPosition("G/2050000/2000", "Mobiliario y Enseres", "2"),
+    "G/2200000/2000": BudgetPosition("G/2200000/2000", "Fungible de Oficina", "2"),
+    "G/2200300/2000": BudgetPosition("G/2200300/2000", "Fungibles de Informática", "2"),
+    "G/2210700/2000": BudgetPosition("G/2210700/2000", "Fungibles de Laboratorio", "2"),
+    "G/2219900/2000": BudgetPosition("G/2219900/2000", "Otros Suministros", "2"),
+    "G/2230100/2000": BudgetPosition("G/2230100/2000", "Otros Transportes", "2"),
+    "G/2260200/2000": BudgetPosition("G/2260200/2000", "Publicidad y Propaganda", "2"),
+    "G/2260500/2000": BudgetPosition("G/2260500/2000", "Cuotas de Inscripciones", "2"),
+    "G/2261100/2000": BudgetPosition("G/2261100/2000", "Ayudas de Viajes", "2"),
+    "G/2270800/2000": BudgetPosition("G/2270800/2000", "Trabajos de Imprenta", "2"),
+    "G/2279900/2000": BudgetPosition("G/2279900/2000", "Otros Trabajos", "2"),
+    "G/6200127/2000": BudgetPosition("G/6200127/2000", "Utillaje", "6"),
+    "G/6200129/2000": BudgetPosition("G/6200129/2000", "Equipos Informáticos", "6"),
 }
 
 d_transaction_document_types = {

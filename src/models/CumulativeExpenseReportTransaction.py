@@ -1,7 +1,7 @@
 from datetime import datetime
 
 
-class Transaction:
+class CumulativeExpenseReportTransaction:
 
     def __init__(self,
                  document_type_code: str = None,
@@ -38,8 +38,8 @@ class Transaction:
             description: str = None,
             amount: float = None,
             excluded_from_total: bool = False,
-    ) -> 'Transaction':
-        return Transaction(
+    ) -> 'CumulativeExpenseReportTransaction':
+        return CumulativeExpenseReportTransaction(
             document_type_code=document_type_code,
             document_number=document_number,
             document_position=document_position,
