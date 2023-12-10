@@ -1,7 +1,7 @@
 import locale
 import logging
 
-from config.configlocal import local_g_tmp_path
+from config.configlocal import local_g_tmp_path, local_g_http_port
 from src.log.CustomFormatter import CustomFormatter
 from src.valueobjects.BudgetPosition import BudgetPosition
 from src.valueobjects.TransactionDocumentType import TransactionDocumentType
@@ -18,7 +18,7 @@ ch.setFormatter(CustomFormatter())
 
 logger.addHandler(ch)
 
-g_http_port = 8080
+g_http_port = local_g_http_port
 
 g_allowed_extensions = ['pdf']
 
