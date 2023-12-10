@@ -1,23 +1,19 @@
 import os
+import uuid
 
 import xlsxwriter
 
-from config.config import g_tmp_path
-from src.services.CumulativeExpenseReportProcessor import CumulativeExpenseReportProcessor
+from config.config import g_tmp_path, logger
+from src.models.CumulativeExpenseReport import CumulativeExpenseReport
 
-if __name__ == "__main__":
-    files = [file for file in os.listdir(g_tmp_path) if file.endswith(".pdf")]
 
-    processor = CumulativeExpenseReportProcessor()
+class CumulativeExpenseReportExcelGenerator:
 
-    for file_name in files:
-        report = processor.process_report(
-            file_name=file_name,
-            real_path=os.path.realpath(os.path.join(g_tmp_path, file_name))
-        )
+    def generate(self, report: CumulativeExpenseReport) -> uuid.UUID:
+        logger.info("Generating Excel file")
 
-        new_file_name = file_name.replace(".pdf", ".xlsx")
-        new_path = os.path.realpath(g_tmp_path + new_file_name)
+        output_file_id = uuid.uuid4()
+        new_path = os.path.join(g_tmp_path, output_file_id.__str__() + ".xlsx")
 
         workbook = xlsxwriter.Workbook(new_path)
         worksheet = workbook.add_worksheet()
@@ -60,3 +56,7 @@ if __name__ == "__main__":
             row += 1
 
         workbook.close()
+
+        logger.info("Excel file generated")
+
+        return output_file_id

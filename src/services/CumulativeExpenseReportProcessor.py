@@ -1,11 +1,10 @@
 import datetime
-import os
 import re
 
 from PyPDF2 import PdfReader
 from colorama import Fore
 
-from config.config import g_tmp_path, g_ignored_strings, g_number_of_pages_regex, g_date_regex, \
+from config.config import g_ignored_strings, g_number_of_pages_regex, g_date_regex, \
     g_months, g_total_report_amount_regex, g_budget_position_header_regex, g_budget_positions, logger, \
     g_budget_position_total_amount_regex, g_transaction_first_line_regex, g_transaction_second_line_regex, \
     g_report_object_regex
@@ -68,7 +67,6 @@ class CumulativeExpenseReportProcessor:
 
         def log_metadata(self) -> None:
             logger.info(f"Procesando informe \"{self.file_name}\"")
-            logger.info(f"Entrada: {self.real_path}")
             logger.info(f"Id. del objeto: {self.report.object_id}")
             logger.info(f"Nombre del objeto: {self.report.object_name}")
             logger.info(f"Número de páginas: {self.report.number_of_pages}")
@@ -97,7 +95,7 @@ class CumulativeExpenseReportProcessor:
 
             if match.group("code") in g_budget_positions:
                 budget_position = g_budget_positions[code]
-                logger.info(Fore.LIGHTGREEN_EX + f"✓ Posición presupuestaria {code} encontrada")
+                logger.info(Fore.LIGHTGREEN_EX + f"✓ Posición presupuestaria {code} encontrada" + Fore.RESET)
                 if match.group("name") != budget_position.name:
                     logger.warning(f"! La posición {code} tiene un nombre diferente al registrado: {match.group('name')} != {budget_position.name}")
             else:
@@ -223,5 +221,7 @@ class CumulativeExpenseReportProcessor:
 
             self.validate_total_report_amount_with_budget_position_totals()
             self.validate_budget_position_totals_with_per_position_transactions()
+
+            logger.info(Fore.LIGHTGREEN_EX + f"✓ Informe procesado correctamente" + Fore.RESET)
 
             return self.report

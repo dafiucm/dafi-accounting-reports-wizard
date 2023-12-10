@@ -1,7 +1,8 @@
 import locale
 import logging
 
-from src.logging.CustomFormatter import CustomFormatter
+from config.configlocal import local_g_tmp_path
+from src.log.CustomFormatter import CustomFormatter
 from src.valueobjects.BudgetPosition import BudgetPosition
 from src.valueobjects.TransactionDocumentType import TransactionDocumentType
 
@@ -17,8 +18,12 @@ ch.setFormatter(CustomFormatter())
 
 logger.addHandler(ch)
 
+g_http_port = 8080
+
+g_allowed_extensions = ['pdf']
+
 # Files
-g_tmp_path = ".tmp/"
+g_tmp_path = local_g_tmp_path
 
 # E.g.: "Orden: E0390122A400 DELEGACION ALUMNOS"
 g_report_object_regex = r"Orden: (?P<object_id>\w+) (?P<object_name>.+)"
